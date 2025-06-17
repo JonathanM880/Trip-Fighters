@@ -1,0 +1,215 @@
+package com.progavanzada.tripfighters.OpenGLUtil;
+
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
+
+
+import com.progavanzada.tripfighters.Figuras.Cilindro;
+import com.progavanzada.tripfighters.Figuras.Cono;
+import com.progavanzada.tripfighters.Figuras.Cube;
+import com.progavanzada.tripfighters.Figuras.Prisma;
+import com.progavanzada.tripfighters.Figuras.Sphere;
+import com.progavanzada.tripfighters.Figuras.Torus;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+public class MyGLRenderer implements GLSurfaceView.Renderer {
+
+    private final float[] mProjectionMatrix = new float[16];
+    private final float[] mViewMatrix = new float[16];
+    private final float[] mVPMatrix = new float[16];
+    // cuerpo
+    private Cono cuerpo;
+    // cabeza
+    private Sphere cabeza;
+    // colilla
+    private Cilindro colilla;
+    // cigarillo
+    private Cilindro cigarillo;
+    // cenizas
+    private List<Cube> cenizas = new ArrayList<>();
+    // humo
+    private Torus aro1, aro2, aro3;
+    // ceja izq
+    private Cilindro cejaIzq;
+    // ceja der
+    private Cilindro cejaDer;
+    //Cubo de Tierra
+    private Prisma tierra, cesped;
+
+    //Apreciar 3d
+    private float angle = 0.0f;
+
+
+    @Override
+    public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+
+        //Cesped
+        cesped= new Prisma(1.0f, 0.25f);
+        cesped.setColorPart(new float[]{0.56f, 0.83f, 0.27f, 1.0f});
+        cesped.move(0f,-0.25f,-2f);
+        //Tierra
+        tierra= new Prisma(1.0f, 0.75f);
+        tierra.setColorPart(new float[]{0.38f, 0.29f, 0.21f, 1.0f});
+        tierra.move(0f,-0.75f,-2f);
+        // cuerpo
+        cuerpo = new Cono(0.5f, 1.0f, 40);  // radio 0.5, altura 1.0
+        cuerpo.move(0f, 0f, -2f);
+        float[] amarilloSuave = new float[]{1f, 1f, 0.5f, 1.0f}; // amarillo claro
+        cuerpo.setColorPart("base", amarilloSuave);
+        cuerpo.setColorPart("lateral", amarilloSuave);
+        // cabeza
+        cabeza = new Sphere(0.25f, 30, 30);
+        cabeza.setColor(new float[]{0.6f, 0.9f, 1f, 1.0f}); // celeste suave
+        cabeza.move(0f, 1.25f, -2f);
+        // ceja izq
+        cejaIzq = new Cilindro(4, 0.02f, 0.1f);            // baja resolución para “rectángulo”
+        cejaIzq.setColorPart("lateral", new float[]{0f, 0f, 0f, 1f}); // negro
+        cejaIzq.move(-0.08f, 1.40f, -1.66f);               // un poco a la izquierda y por delante de la cabeza
+        cejaIzq.rotate(0f, 0f, -80f);                      // inclinar hacia arriba
+        // ceja der
+        cejaDer = new Cilindro(4, 0.02f, 0.1f);
+        cejaDer.setColorPart("lateral", new float[]{0f, 0f, 0f, 1f});
+        cejaDer.move( 0.08f, 1.40f, -1.66f);               // simétrico, a la derecha
+        cejaDer.rotate(0f, 0f, 80f);
+        // colilla
+        colilla = new Cilindro(40, 0.05f, 0.5f); // tipo cigarro: delgado y corto
+        colilla.setColorPart("lateral", new float[]{1f, 0.5f, 0f, 1.0f}); // naranja
+        colilla.move(0f, 1.25f, -1.75f);
+        colilla.rotate(90f, 0f, 0f); // rotarlo para que quede horizontal
+        // cigarillo
+        cigarillo = new Cilindro(40, 0.05f, 1.5f); // delgado, como un cigarro
+        cigarillo.setColorPart("lateral", new float[]{1f, 1f, 1f, 1.0f}); // blanco
+        cigarillo.setColorPart("top", new float[]{0.5f, 0.5f, 0.5f, 1.0f}); // gris
+        cigarillo.move(0f, 1.25f, -1f);
+        cigarillo.rotate(90f, 0f, 0f); // rotar para que quede horizontal
+        // cenizas
+        cenizas(40); // genera 30 partículas
+        // humo
+        float baseX = 0f;
+        float baseY = 1.25f;
+        float baseZ = -1f + 1.5f / 2f; // punta del cigarillo
+        float R1 = 0.05f; // Radio minimo
+
+        aro1 = new Torus(30, R1+0.05f, 0.01f); // pequeño
+        aro1.setColor(new float[]{0.8f, 0.8f, 0.8f, 1.0f}); // gris claro
+        aro1.move(baseX, baseY, baseZ+0.2f);
+
+        aro2 = new Torus(30, R1+0.07f, 0.012f); // mediano
+        aro2.setColor(new float[]{0.8f, 0.8f, 0.8f, 1.0f});
+        aro2.move(baseX, baseY, baseZ+0.4f);
+
+        aro3 = new Torus(30, R1+0.1f, 0.015f); // grande
+        aro3.setColor(new float[]{0.8f, 0.8f, 0.8f, 1.0f});
+        aro3.move(baseX, baseY , baseZ+0.6f);
+
+
+    }
+
+    @Override
+    public void onSurfaceChanged(GL10 gl10, int width, int height) {
+        GLES20.glClearColor(0.455f, 0.592f, 0.71f, 1.0f);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST); // ¡Habilita el test de profundidad!
+
+        GLES20.glViewport(0, 0, width, height);
+
+        float ratio = (float) width / height;
+        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
+    }
+
+    @Override
+    public void onDrawFrame(GL10 gl10) {
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+        angle += 0.5f; // ajusta la velocidad
+        if (angle > 360) angle -= 360;
+
+        float radius = 3.0f;
+        float camX = (float) (Math.sin(Math.toRadians(angle)) * radius);
+        float camZ = (float) (Math.cos(Math.toRadians(angle)) * radius);
+        float camY = 1.5f; // Altura de la cámara
+
+        // La cámara orbita alrededor del punto (0, 0.5, 0)
+        Matrix.setLookAtM(
+                mViewMatrix, 0,
+                camX, camY, camZ,  // posición de la cámara
+                0.0f, 0.5f, 0.0f,  // punto al que mira (centro de la escena)
+                0.0f, 1.0f, 0.0f   // up vector
+        );
+
+        Matrix.multiplyMM(mVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        //Tierra
+        tierra.draw(mVPMatrix);
+        // Cesped
+        cesped.draw(mVPMatrix);
+        // cuerpo
+        cuerpo.draw(mVPMatrix);
+        // cabeza
+        cabeza.draw(mVPMatrix);
+        // ceja izq
+        cejaIzq.draw(mVPMatrix);
+        // ceja der
+        cejaDer.draw(mVPMatrix);
+        // colilla
+        colilla.draw(mVPMatrix);
+        // cigarillo
+        cigarillo.draw(mVPMatrix);
+        // cenizas
+        for (Cube c : cenizas) {
+            c.draw(mVPMatrix);
+        }
+        // humo
+        aro1.draw(mVPMatrix);
+        aro2.draw(mVPMatrix);
+        aro3.draw(mVPMatrix);
+
+
+    }
+    // cenizas
+    private void cenizas(int numCenizas) {
+        cenizas.clear();
+        float baseX = 0f;
+        float baseY = 1.25f;
+        float baseZ = -1f + 1.5f / 2f; // fin del cilindro (centro - mitad de largo)
+
+        for (int i = 0; i < numCenizas; i++) {
+            float sideLength = 0.05f;
+            float radius = 0.025f;
+            Cube c= new Cube(sideLength);
+
+            // dispersión aleatoria hacia abajo
+            float offsetY = (float) -(Math.random() * 0.5f);  // caída vertical
+            float offsetX = (float) ((Math.random() - 0.5f) * 0.1f); // dispersión lateral
+            float offsetZ = (float) ((Math.random() - 0.5f) * 0.1f); // dispersión lateral
+
+            c.move(baseX + offsetX, baseY + offsetY, baseZ + offsetZ);
+            c.rotate(90f, 0f, 0f); // alinear como polvo plano
+
+            // color probabilístico
+            if (Math.random() < (1.0 - Math.abs(offsetY) * 2)) {
+                c.setColorPart( new float[]{1f, 0.3f, 0f, 1.0f}); // fuego
+
+            } else {
+                c.setColorPart( new float[]{0.3f, 0.3f, 0.3f, 1.0f}); // fuego
+
+            }
+            cenizas.add(c);
+        }
+    }
+
+
+    public static int loadShader(int type, String shaderCode) {
+        int shader = GLES20.glCreateShader(type);
+        GLES20.glShaderSource(shader, shaderCode);
+        GLES20.glCompileShader(shader);
+        return shader;
+    }
+}
