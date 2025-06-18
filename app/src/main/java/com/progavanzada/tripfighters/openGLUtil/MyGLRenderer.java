@@ -22,7 +22,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private ChicoCubo chicoCubo;
     private SalaDeOro salaDeOro;
     private Cactus cactus;
-
     //Apreciar 3d
     private float angle = 0.0f;
 
@@ -63,7 +62,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // La cámara orbita alrededor del punto (0, 0.5, 0)
         Matrix.setLookAtM(
                 mViewMatrix, 0,
-                camX, camY, camZ,  // posición de la cámara
+                0, 0, 8,  // posición de la cámara
                 0.0f, 0f, 0.0f,  // punto al que mira (centro de la escena)
                 0.0f, 1.0f, 0.0f   // up vector
         );
@@ -71,9 +70,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
 
-        chicoCubo.draw(mVPMatrix);
+        //chicoCubo.draw(mVPMatrix);
 
-        salaDeOro.draw(mVPMatrix);
+        //salaDeOro.draw(mVPMatrix);
 
         cactus.draw(mVPMatrix);
     }
