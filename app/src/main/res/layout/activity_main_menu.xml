@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#000000"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="STEVE´S FIGHTERS"
+        android:textSize="34sp"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JUGAR"/>
+
+    <Button
+        android:id="@+id/btnAjustes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AYUDA"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btnSalir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SALIR"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

@@ -143,6 +143,7 @@ public class Cono implements Figura {
 
         GLES20.glUniform4fv(colorHandle, 1, currentBaseColor, 0); // Color de la base
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, baseVertexCount);
+        baseBuffer.position(0); //falta esto
 
         // Dibuja los lados
         GLES20.glVertexAttribPointer(
@@ -155,6 +156,7 @@ public class Cono implements Figura {
         );
         GLES20.glUniform4fv(colorHandle, 1, currentSideColor, 0); // Color de los lados
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, sideVertexCount);
+        sideBuffer.position(0);
 
         GLES20.glDisableVertexAttribArray(positionHandle);
     }
