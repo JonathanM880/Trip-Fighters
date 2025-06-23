@@ -30,9 +30,27 @@ public class MyGLSurfaceView extends GLSurfaceView {
         setRenderMode(RENDERMODE_CONTINUOUSLY);
     }
 
-    public void setPersonaje(int index) {
-        renderer.setPersonaje(index);
+    public void setVillano(int index) {
+        renderer.setVillano(index);
         requestRender();
     }
+
+    public void setHeroe(int index) {
+        renderer.setHeroe(index);
+        requestRender();
+    }
+
+    public void setEscenario(int index) {
+        renderer.setEscenario(index);
+        requestRender();
+    }
+
+    public void setModoSeleccionEscenario(boolean valor) {
+        renderer.setModoSeleccionEscenario(valor);
+        requestRender();
+    }
+
+
+
 
 }

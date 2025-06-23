@@ -1,38 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
-    android:background="#000000"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="#000000"> <!-- Fondo negro opcional -->
 
+    <!-- TÍTULO -->
+
+    <!-- Botón JUGAR -->
     <TextView
         android:id="@+id/title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STEVE´S FIGHTERS"
-        android:textSize="34sp"
-        android:textColor="#ffffff"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="60dp"
+        android:fontFamily="sans-serif-black"
+        android:shadowColor="#AA000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:text="STEVE'S FIGHTERS"
+        android:textColor="#FFCC00"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="JUGAR"/>
+        android:text="🎮 JUGAR"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1E90FF"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp" />
 
+    <!-- Botón AYUDA -->
     <Button
         android:id="@+id/btnAjustes"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="AYUDA"
-        android:layout_marginTop="16dp"/>
+        android:text="❓ AYUDA"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#32CD32"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp" />
 
+    <!-- Botón SALIR -->
     <Button
         android:id="@+id/btnSalir"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="SALIR"
-        android:layout_marginTop="16dp"/>
+        android:text="🚪 SALIR"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#DC143C"
+        android:padding="12dp" />
+
 </LinearLayout>
+

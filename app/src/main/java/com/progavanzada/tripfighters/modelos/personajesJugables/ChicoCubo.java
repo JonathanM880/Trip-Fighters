@@ -17,16 +17,16 @@ public class ChicoCubo {
         partes = new ArrayList<>();
 
         // cuerpo
-        Cono cuerpo = new Cono(0.5f, 1.0f, 40);
+        Cono cuerpo = new Cono(0.5f, 2.5f, 4);
         cuerpo.move(0f, 0f, -2f);
         float[] colorPiel = new float[]{1.0f, 0.8f, 0.6f, 1.0f};
         cuerpo.setColorPart("all", colorPiel);
         partes.add(cuerpo);
 
         // cabeza
-        Sphere cabeza = new Sphere(0.25f, 30, 30);
+        Sphere cabeza = new Sphere(1f, 30, 30);
         cabeza.setColor(new float[]{1.0f, 0.8f, 0.6f, 1.0f});
-        cabeza.move(0f, 1.25f, -2f);
+        cabeza.move(0f, 3.5f, -2f);
         cabeza.scale(0.5f,1.5f,1.0f);
         partes.add(cabeza);
     }

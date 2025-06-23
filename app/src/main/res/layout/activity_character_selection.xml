@@ -12,25 +12,61 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="bottom|center_horizontal"
-        android:paddingBottom="32dp"
-        android:paddingTop="32dp">
+        android:gravity="top|center_horizontal"
+        android:paddingTop="15dp"
+        android:paddingBottom="32dp">
 
+        <!-- HÉROE -->
+        <TextView
+            android:id="@+id/labelHero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚔️ HÉROE ⚔️"
+            android:textColor="#FFD700"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="175dp" />
+
+        <Button
+            android:id="@+id/btn_heroe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="→"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF4500"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="40dp" />
+
+        <!-- VILLANO -->
         <TextView
             android:id="@+id/labelVillain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VILLANO"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:text="👹 JEFE 👹"
+            android:textColor="#FF0000"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="230dp" />
 
         <Button
             android:id="@+id/btn_siguiente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="→"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#8B0000"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp" />
 
@@ -38,7 +74,11 @@
             android:id="@+id/btn_batalla"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BATALLA"
+            android:text="⚡ SIGUIENTE ⚡"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#006400"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
+
 </FrameLayout>

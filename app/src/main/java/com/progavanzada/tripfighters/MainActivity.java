@@ -8,8 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.progavanzada.tripfighters.openGLUtil.MyGLSurfaceView;
-
 /*
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         btnExit.setOnClickListener(v -> finish());
     }
 }
+
 */
+
 public class MainActivity extends AppCompatActivity {
 
     private MyGLSurfaceView glSurfaceView;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(glSurfaceView);
     }
 }
+
 
 
 

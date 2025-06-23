@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#000000">
+
+<com.progavanzada.tripfighters.openGLUtil.MyGLSurfaceView
+    android:id="@+id/myGLSurfaceViewEscenario"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+<!-- Botón Siguiente -->
+<Button
+    android:id="@+id/btnSiguienteEscenario"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:text="→"
+    android:textSize="24sp"
+    android:textColor="#FFFFFF"
+    android:backgroundTint="#1E90FF"
+    android:layout_alignParentEnd="true"
+    android:layout_centerVertical="true"
+    android:layout_marginEnd="16dp"
+    android:elevation="6dp" />
+
+<!-- Botón Batalla -->
+<Button
+    android:id="@+id/btnBatalla"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="🔥 ¡BATALLA! 🔥"
+    android:textSize="22sp"
+    android:textColor="#FFFFFF"
+    android:backgroundTint="#FF4500"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="40dp"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:elevation="10dp" />
+</RelativeLayout>
+

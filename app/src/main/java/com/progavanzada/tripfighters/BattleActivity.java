@@ -1,4 +1,4 @@
-package com.progavanzada.tripfighters.modelos.villanos;
+package com.progavanzada.tripfighters;
 
 import android.os.Bundle;
 
@@ -14,12 +14,19 @@ public class BattleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int personaje = getIntent().getIntExtra("personaje", 0);
+        // Obtener héroe y villano correctamente
+        int villano = getIntent().getIntExtra("villano", 0);
+        int heroe = getIntent().getIntExtra("heroe", 0);
+        int escenario = getIntent().getIntExtra("escenario", 0);
 
+        // Crear el SurfaceView y pasar ambos
         glSurfaceView = new MyGLSurfaceView(this);
-        glSurfaceView.setPersonaje(personaje);
+        glSurfaceView.setVillano(villano);
+        glSurfaceView.setHeroe(heroe);
+        glSurfaceView.setEscenario(escenario);
 
         setContentView(glSurfaceView);
     }
 }
+
 
