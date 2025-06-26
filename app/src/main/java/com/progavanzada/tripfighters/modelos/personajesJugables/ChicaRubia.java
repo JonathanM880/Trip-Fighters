@@ -8,10 +8,10 @@ import com.progavanzada.tripfighters.figuras.Sphere;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChicoCubo {
+public class ChicaRubia {
     private List<Figura> partes;
 
-    public ChicoCubo() {
+    public ChicaRubia() {
         partes = new ArrayList<>();
 
         float offsetY = -0.2f;
@@ -20,7 +20,7 @@ public class ChicoCubo {
 
         // --- CABEZA ---
         Prisma cabeza = new Prisma(0.7f, 0.7f, 0.7f);
-        cabeza.setColor(new float[]{1f, 0.7f, 0.75f, 1});
+        cabeza.setColor(new float[]{1f, 0.85f, 0.75f, 1});
         cabeza.move(0f, 1.6f + offsetY, offsetZ);
         partes.add(cabeza);
 
@@ -30,35 +30,25 @@ public class ChicoCubo {
 
         // --- MEJILLAS ---
         Sphere mejillaIzq = new Sphere(0.045f, 10, 10);
-        mejillaIzq.setColor(new float[]{1f, 0.5f, 0.7f, 1});
+        mejillaIzq.setColor(new float[]{1f, 0.6f, 0.7f, 1});
         mejillaIzq.move(-0.3f * escala, (1.75f * escala) + offsetY, offsetZ + 0.37f);
         partes.add(mejillaIzq);
 
         Sphere mejillaDer = new Sphere(0.045f, 10, 10);
-        mejillaDer.setColor(new float[]{1f, 0.5f, 0.7f, 1});
+        mejillaDer.setColor(new float[]{1f, 0.6f, 0.7f, 1});
         mejillaDer.move(0.3f * escala, (1.75f * escala) + offsetY, offsetZ + 0.37f);
         partes.add(mejillaDer);
 
         // --- CUERPO ---
         Prisma cuerpo = new Prisma(0.45f * escala, 0.5f * escala, 0.7f * escala);
-        cuerpo.setColor(new float[]{0.4f, 0.4f, 0.45f, 1});
+        cuerpo.setColor(new float[]{0.6f, 0.8f, 1f, 1});
         cuerpo.move(0f, (1.3f * escala) + offsetY, offsetZ);
         partes.add(cuerpo);
-
-        // --- CORBATA ---
-        Prisma corbata = new Prisma(0.1f * escala, 0.01f * escala, 0.2f * escala);
-        corbata.setColor(new float[]{0.8f, 0f, 0f, 1});
-        corbata.move(0f, (1.38f * escala) + offsetY, 0.2f + offsetZ);
-
-
-        partes.add(corbata);
 
         // --- BOTONES ---
         float[] colorBoton = new float[]{1f, 1f, 1f, 1};
         float xBoton = 0f;
         float zBoton = 0.2f + offsetZ;
-
-
 
         float[] alturas = new float[]{
                 (1.20f * escala) + offsetY,
@@ -74,36 +64,38 @@ public class ChicoCubo {
 
         // --- MANGAS ---
         Prisma mangaIzq = new Prisma(0.13f * escala, 0.13f * escala, 0.13f * escala);
-        mangaIzq.setColor(new float[]{0.2f, 0.2f, 0.25f, 1});
+        mangaIzq.setColor(new float[]{0.6f, 0.8f, 1f, 1});
         mangaIzq.move(-0.3f * escala, (1.4f * escala) + offsetY, offsetZ);
         mangaIzq.scale(1.5f, 1.5f, 1.5f);
         partes.add(mangaIzq);
 
         Prisma mangaDer = new Prisma(0.13f * escala, 0.13f * escala, 0.13f * escala);
-        mangaDer.setColor(new float[]{0.2f, 0.2f, 0.25f, 1});
+        mangaDer.setColor(new float[]{0.6f, 0.8f, 1f, 1});
         mangaDer.move(0.3f * escala, (1.4f * escala) + offsetY, offsetZ);
         mangaDer.scale(1.5f, 1.5f, 1.5f);
         partes.add(mangaDer);
 
         // --- BRAZOS ---
         Cilindro brazoIzq = new Cilindro(6, 0.09f * escala, 0.6f * escala);
-        brazoIzq.setColorPart("all", new float[]{1f, 0.7f, 0.75f, 1});
+        brazoIzq.setColorPart("all", new float[]{1f, 0.85f, 0.75f, 1});
         brazoIzq.move(-0.3f * escala, (1.2f * escala) + offsetY, offsetZ);
         partes.add(brazoIzq);
 
         Cilindro brazoDer = new Cilindro(6, 0.09f * escala, 0.6f * escala);
-        brazoDer.setColorPart("all", new float[]{1f, 0.7f, 0.75f, 1});
+        brazoDer.setColorPart("all", new float[]{1f, 0.85f, 0.75f, 1});
         brazoDer.move(0.3f * escala, (1.2f * escala) + offsetY, offsetZ);
         partes.add(brazoDer);
 
         // --- PIERNAS ---
         Cilindro piernaIzq = new Cilindro(6, 0.11f * escala, 0.85f * escala);
-        piernaIzq.setColorPart("all", new float[]{0.2f, 0.2f, 0.25f, 1});
+        piernaIzq.setColorPart("all", new float[]{1f, 0.2f, 0.6f, 1}
+        );
         piernaIzq.move(-0.13f * escala, (0.7f * escala) + offsetY, offsetZ);
         partes.add(piernaIzq);
 
         Cilindro piernaDer = new Cilindro(6, 0.11f * escala, 0.85f * escala);
-        piernaDer.setColorPart("all", new float[]{0.2f, 0.2f, 0.25f, 1});
+        piernaDer.setColorPart("all", new float[]{1f, 0.2f, 0.6f, 1}
+        );
         piernaDer.move(0.13f * escala, (0.7f * escala) + offsetY, offsetZ);
         partes.add(piernaDer);
 
@@ -120,46 +112,80 @@ public class ChicoCubo {
         zapatoDer.scale(1, 1, 2.2f);
         partes.add(zapatoDer);
 
-        // --- PELO --- (sin cambios)
-        Sphere pelo1 = new Sphere(0.2f, 10, 10);
-        pelo1.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo1.move(0f, 1.95f + offsetY, offsetZ - 0.15f);
-        partes.add(pelo1);
+        // --- PELO
+        agregarCabelloFrondoso(partes, offsetY, offsetZ);
+    }
 
-        Sphere pelo2 = new Sphere(0.2f, 10, 10);
-        pelo2.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo2.move(0f, 1.9f + offsetY, offsetZ - 0.1f);
-        partes.add(pelo2);
+    private void agregarCabelloFrondoso(List<Figura> partes, float offsetY, float offsetZ) {
+        float[] rubio = new float[]{1f, 0.9f, 0.4f, 1};
+        float yBase = 1.6f + offsetY;
+        float zBase = offsetZ;
 
-        Sphere pelo3 = new Sphere(0.17f, 10, 10);
-        pelo3.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo3.move(0f, 1.95f + offsetY, offsetZ - 0.05f);
-        partes.add(pelo3);
+        for (float x = -0.3f; x <= 0.3f; x += 0.15f) {
+            for (float z = -0.3f; z <= 0.3f; z += 0.15f) {
+                float y = 0.42f;
+                partes.add(crearEsferaCabello(x, yBase + y, zBase + z, 0.16f, rubio));
+            }
+        }
 
-        Sphere pelo4 = new Sphere(0.2f, 10, 10);
-        pelo4.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo4.move(-0.15f, 1.95f + offsetY, offsetZ - 0.1f);
-        partes.add(pelo4);
+        float[] xLados = new float[]{-0.4f, -0.35f, 0.35f, 0.4f};
+        float[] yLados = new float[]{0.25f, 0.05f, -0.15f, -0.35f, -0.55f};
 
-        Sphere pelo5 = new Sphere(0.17f, 10, 10);
-        pelo5.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo5.move(0.15f, 1.99f + offsetY, offsetZ - 0.1f);
-        partes.add(pelo5);
+        for (float x : xLados) {
+            for (float y : yLados) {
+                float z = zBase + 0.05f;
+                float radio = 0.18f;
 
-        Sphere pelo6 = new Sphere(0.18f, 10, 10);
-        pelo6.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo6.move(-0.1f, 1.9f + offsetY, offsetZ - 0.05f);
-        partes.add(pelo6);
 
-        Sphere pelo7 = new Sphere(0.2f, 10, 10);
-        pelo7.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo7.move(0.1f, 1.9f + offsetY, offsetZ - 0.05f);
-        partes.add(pelo7);
+                if (y <= -0.35f) {
+                    radio = 0.16f;
+                }
 
-        Sphere pelo8 = new Sphere(0.19f, 10, 10);
-        pelo8.setColor(new float[]{0.1f, 0.1f, 0.1f, 1});
-        pelo8.move(0f, 1.87f + offsetY, offsetZ);
-        partes.add(pelo8);
+                partes.add(crearEsferaCabello(x, yBase + y + 0.3f, z, radio, rubio));
+            }
+        }
+
+
+
+        // --- Cabello
+        float[] xNuca = new float[]{-0.3f, -0.15f, 0f, 0.15f, 0.3f};
+        float[] yNuca = new float[]{0.1f, -0.1f, -0.3f, -0.5f, -0.7f, -0.9f};
+
+        for (float x : xNuca) {
+            for (float y : yNuca) {
+                float z = zBase - 0.25f - (0.05f * Math.abs(x));
+                float radio = 0.16f;
+
+                if (y <= -0.7f) {
+                    radio = 0.14f;
+                } else if (y <= -0.5f) {
+                    radio = 0.15f;
+                }
+
+                partes.add(crearEsferaCabello(x, yBase + y + 0.3f, z, radio, rubio));
+            }
+        }
+
+
+
+        float[][] esquinas = new float[][] {
+                {-0.35f, yBase + 0.25f, zBase - 0.2f},
+                {0.35f, yBase + 0.25f, zBase - 0.2f},
+                {-0.35f, yBase + 0.0f, zBase - 0.2f},
+                {0.35f, yBase + 0.0f, zBase - 0.2f}
+        };
+        for (float[] pos : esquinas) {
+            partes.add(crearEsferaCabello(pos[0], pos[1], pos[2], 0.15f, rubio));
+        }
+    }
+
+
+
+    private Sphere crearEsferaCabello(float x, float y, float z, float radio, float[] color) {
+        Sphere pelo = new Sphere(radio, 10, 10);
+        pelo.setColor(color);
+        pelo.move(x, y, z);
+        return pelo;
     }
 
     private void crearOjoSimple(float x, List<Figura> partes, float offsetY, float offsetZ, boolean mirarAtras) {

@@ -238,7 +238,7 @@ public class SalaDeOro {
 
     public void draw(float[] mvpMatrix) {
         for (Figura f : componentes) {
-            f.draw(mvpMatrix);
+           // f.draw(mvpMatrix);
         }
     }
 }
