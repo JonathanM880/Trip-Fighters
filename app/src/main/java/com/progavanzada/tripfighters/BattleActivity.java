@@ -13,20 +13,21 @@ public class BattleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_battle); // 👈 usa el layout
 
-        // Obtener héroe y villano correctamente
+        glSurfaceView = findViewById(R.id.myGLSurfaceViewBattle); // 👈 lo buscas por ID
+
         int villano = getIntent().getIntExtra("villano", 0);
         int heroe = getIntent().getIntExtra("heroe", 0);
         int escenario = getIntent().getIntExtra("escenario", 0);
+        glSurfaceView.setModoBatalla(true);
 
-        // Crear el SurfaceView y pasar ambos
-        glSurfaceView = new MyGLSurfaceView(this);
-        glSurfaceView.setVillano(villano);
         glSurfaceView.setHeroe(heroe);
+        glSurfaceView.setVillano(villano);
         glSurfaceView.setEscenario(escenario);
 
-        setContentView(glSurfaceView);
     }
+
 }
 
 

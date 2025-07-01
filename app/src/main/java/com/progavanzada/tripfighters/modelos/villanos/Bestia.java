@@ -90,11 +90,9 @@ public class Bestia {
         pectoralesLD.setColor(new float[]{0.3f, 0.15f, 0.05f, 1.0f});
         pectoralesLD.move(-0.51f, 1.53f, 2.19f);
         partes.add(pectoralesLD);
-
-
-
+        
         Prisma abdomenA = new Prisma(0.7f, 0.01f, 0.55f);
-        abdomenA.setColor(new float[]{0.3f, 0.2f, 0.1f, 1.0f});
+        abdomenA.setColor(new float[]{0.3f, 0.15f, 0.05f, 1.0f});
         abdomenA.move(0f, 2f, 2.25f);
         partes.add(abdomenA);
 

@@ -21,8 +21,8 @@ public class CharacterSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_selection); // Usa el layout con FrameLayout
-
         glSurfaceView = findViewById(R.id.gl_surface);
+        glSurfaceView.setModoSeleccionEscenario(false);
         btnFlecha = findViewById(R.id.btn_siguiente);
         btnSiguiente = findViewById(R.id.btn_batalla);
 
@@ -40,7 +40,7 @@ public class CharacterSelectionActivity extends AppCompatActivity {
         btnHeroe = findViewById(R.id.btn_heroe);
 
         btnHeroe.setOnClickListener(v -> {
-            heroeActual = (heroeActual + 1) % 3; // Supongamos que tienes 3 héroes
+            heroeActual = (heroeActual + 1) % 5; // Supongamos que tienes 3 héroes
             glSurfaceView.setHeroe(heroeActual);
         });
 
@@ -50,8 +50,6 @@ public class CharacterSelectionActivity extends AppCompatActivity {
             intent.putExtra("heroe", heroeActual);
             startActivity(intent);
         });
-
-
     }
 }
 

@@ -21,7 +21,6 @@ public class EscenarioActivity extends AppCompatActivity {
         villano = getIntent().getIntExtra("villano", 0);
 
         setContentView(R.layout.activity_escenario);
-
         glSurfaceView = findViewById(R.id.myGLSurfaceViewEscenario);
         glSurfaceView.setModoSeleccionEscenario(true);
         glSurfaceView.setEscenario(escenarioActual);
