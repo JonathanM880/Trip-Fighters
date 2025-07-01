@@ -6,8 +6,14 @@ import android.opengl.Matrix;
 
 
 import com.progavanzada.tripfighters.figuras.Cilindro;
+import com.progavanzada.tripfighters.modelos.escenas.ArenaInfierno;
+import com.progavanzada.tripfighters.modelos.escenas.ArenaLegendaria;
 import com.progavanzada.tripfighters.modelos.escenas.SalaDeOro;
+import com.progavanzada.tripfighters.modelos.personajesJugables.ChicaCubo;
+import com.progavanzada.tripfighters.modelos.personajesJugables.ChicaRubia;
 import com.progavanzada.tripfighters.modelos.personajesJugables.ChicoCubo;
+import com.progavanzada.tripfighters.modelos.personajesJugables.ChicoGamer;
+import com.progavanzada.tripfighters.modelos.personajesJugables.Mateo;
 import com.progavanzada.tripfighters.modelos.villanos.Bestia;
 import com.progavanzada.tripfighters.modelos.villanos.Cactus;
 import com.progavanzada.tripfighters.modelos.villanos.Cleopatra;
@@ -27,20 +33,21 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private final float[] mProjectionMatrix = new float[16];
-    private final float[] mViewMatrix = new float[16];
-    private final float[] mVPMatrix = new float[16];
-    private final float[] mHeroeVPMatrix = new float[16];
-    private final float[] mVillanoVPMatrix = new float[16];
+    private float angle =0.0f;
     private float heroAngle = 0f;
     private float villainAngle = 0f;
     private float escenarioAngle = 0f;
-
     private int screenWidth;
     private int screenHeight;
 
-    private Trump trump;
+    //HEROES
+    private ChicaCubo chicaCubo;
+    private ChicaRubia chicaRubia;
+    private ChicoGamer chicoGamer;
+    private Mateo mateo;
     private ChicoCubo chicoCubo;
-    private SalaDeOro salaDeOro;
+    //VILLANOS
+    private Trump trump;
     private Cactus cactus;
     private Robot robot;
     private Payaso payaso;
@@ -50,8 +57,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Raton raton;
     private Kira kira;
     private Cleopatra cleopatra;
-    //Apreciar 3d
-    private float angle = 0.0f;
+
+    //ESCENARIOS
+
+    private SalaDeOro salaDeOro;
+    private ArenaInfierno arenaInfierno;
+    private ArenaLegendaria arenaLegendaria;
+
+
     private int villanoActual = 0;
 
     public void setVillano(int index) {
@@ -70,14 +83,24 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         this.escenarioActual = index;
     }
 
+    private boolean modoBatalla = false;
+
+    public void setModoBatalla(boolean valor) {
+        this.modoBatalla = valor;
+    }
+
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-
+        //HEROES
         chicoCubo = new ChicoCubo();
-        salaDeOro = new SalaDeOro();
+        chicaCubo = new ChicaCubo();
+        chicaRubia = new ChicaRubia();
+        chicoGamer = new ChicoGamer();
+        mateo = new Mateo();
+        //VILLANOS
         cactus = new Cactus();
         robot = new Robot();
         payaso = new Payaso();
@@ -88,6 +111,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         kira = new Kira();
         trump = new Trump();
         cleopatra = new Cleopatra();
+        //ESCENARIOS
+        salaDeOro = new SalaDeOro();
+        arenaInfierno = new ArenaInfierno();
+        arenaLegendaria = new ArenaLegendaria();
     }
 
     @Override
@@ -100,61 +127,104 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, width, height);
 
         float ratio = (float) width / height;
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 1, 15);
+        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 1, 25);
     }
 
     @Override
     public void onDrawFrame(GL10 gl10) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-        //PARA QUE VEAN COMO SE DIBUJA EN 3D, ROTAR CAMARA
+        // ESTO ES SOLO PARA LA BATTLE ACTIVITY (DAVID)
 
-        angle += 1f; // ajusta la velocidad
+        // === MATRICES DE VISTA Y PROYECCIÓN ===
+        float[] viewM = new float[16];
+        float[] viewProjectionM = new float[16];
+
+// === CÁMARA ORBITAL ===
+        angle += .77f; // ajusta la velocidad de rotación
         if (angle > 360) angle -= 360;
 
-        float radius = 8f;
+        float radius = 10f;
         float camX = (float) (Math.sin(Math.toRadians(angle)) * radius);
         float camZ = (float) (Math.cos(Math.toRadians(angle)) * radius);
         float camY = 1f; // Altura de la cámara
 
-        // La cámara orbita alrededor del punto (0, 0.5, 0)
-        Matrix.setLookAtM(
-                mViewMatrix, 0,
-                0, 0, -6,  // posición de la cámara
-                0.0f, 0f, 0.0f,  // punto al que mira (centro de la escena)
-                0.0f, 1.0f, 0.0f   // up vector
+        Matrix.setLookAtM(viewM, 0,
+                camX, camY, camZ,   // posición de la cámara
+                0f, 0.5f, 0f,       // punto al que mira (centro de la escena)
+                0f, 1f, 0f          // vector "up"
         );
 
-        Matrix.multiplyMM(mVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+        Matrix.multiplyMM(viewProjectionM, 0, mProjectionMatrix, 0, viewM, 0);
 
-        //cleopatra.draw(mVPMatrix);
+// === MODO BATALLA ===
+        if (modoBatalla) {
+            GLES20.glViewport(0, 0, screenWidth, screenHeight); // pantalla completa
 
-        //chicoCubo.draw(mVPMatrix);
+            // === ESCENARIO ===
+            float[] modelEscenario = new float[16];
+            float[] mvpEscenario = new float[16];
+            Matrix.setIdentityM(modelEscenario, 0);
+            Matrix.multiplyMM(mvpEscenario, 0, viewProjectionM, 0, modelEscenario, 0);
 
-        //salaDeOro.draw(mVPMatrix);
+            switch (escenarioActual) {
+                case 0: salaDeOro.draw(mvpEscenario); break;
+                case 1: arenaInfierno.draw(mvpEscenario); break;
+                case 2: arenaLegendaria.draw(mvpEscenario); break;
+            }
 
-        //villanos
+            // === HEROE ===
+            float[] modelHeroe = new float[16];
+            float[] mvpHeroe = new float[16];
+            Matrix.setIdentityM(modelHeroe, 0);
+            Matrix.translateM(modelHeroe, 0, 0f, 0f, -2f); // donde suelen estar los héroes
+            Matrix.multiplyMM(mvpHeroe, 0, viewProjectionM, 0, modelHeroe, 0);
 
-        //cactus.draw(mVPMatrix);
-        //robot.draw(mVPMatrix);
-        //payaso.draw(mVPMatrix);
-        //jack.draw(mVPMatrix);
-        //herobrine.draw(mVPMatrix);
-        //raton.draw(mVPMatrix);
-        bestia.draw(mVPMatrix);
-        //kira.draw(mVPMatrix);
-        //trump.draw(mVPMatrix);
+            switch (heroeActual) {
+                case 0: chicoCubo.draw(mvpHeroe); break;
+                case 1: chicaCubo.draw(mvpHeroe); break;
+                case 2: chicaRubia.draw(mvpHeroe); break;
+                case 3: mateo.draw(mvpHeroe); break;
+                case 4: chicoGamer.draw(mvpHeroe); break;
+            }
 
-        /*
+            // === VILLANO ===
+            float[] modelVillano = new float[16];
+            float[] mvpVillano = new float[16];
+            Matrix.setIdentityM(modelVillano, 0);
+            Matrix.translateM(modelVillano, 0, 0f, 0f, 2f); // donde suelen estar los villanos
+            Matrix.multiplyMM(mvpVillano, 0, viewProjectionM, 0, modelVillano, 0);
+
+            switch (villanoActual) {
+                case 0: cactus.draw(mvpVillano); break;
+                case 1: robot.draw(mvpVillano); break;
+                case 2: payaso.draw(mvpVillano); break;
+                case 3: jack.draw(mvpVillano); break;
+                case 4: herobrine.draw(mvpVillano); break;
+                case 5: raton.draw(mvpVillano); break;
+                case 6: bestia.draw(mvpVillano); break;
+                case 7: kira.draw(mvpVillano); break;
+                case 8: trump.draw(mvpVillano); break;
+                case 9: cleopatra.draw(mvpVillano); break;
+            }
+
+            return; // ✅ ¡IMPORTANTE! No sigas con el otro dibujo
+        }
+
+
+
+        //hasta aqui va tu parte DAVID
+
         heroAngle += 1.5f;
         villainAngle += 1.5f;
         escenarioAngle += 1.5f;
 
-        float[] viewMatrix = new float[16];
-        Matrix.setLookAtM(viewMatrix, 0, 0, .5f, 6, 0, 0, 0, 0, 1, 0);
+        // TODO LO DE SELECCION DE ESCENARIO
+        float[] viewMatrixEscenario = new float[16];
+        Matrix.setLookAtM(viewMatrixEscenario, 0, 0, .5f, 16, 0, 0, 0, 0, 1, 0);
 
-        float[] viewProjectionMatrix = new float[16];
-        Matrix.multiplyMM(viewProjectionMatrix, 0, mProjectionMatrix, 0, viewMatrix, 0);
+        float[] viewProjectionMatrixEscenario = new float[16];
+        Matrix.multiplyMM(viewProjectionMatrixEscenario, 0, mProjectionMatrix, 0, viewMatrixEscenario, 0);
 
         // === ESCENARIO ===
         if (modoSeleccionEscenario) {
@@ -165,17 +235,24 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
             Matrix.setIdentityM(modelEscenario, 0);
             Matrix.rotateM(modelEscenario, 0, escenarioAngle, 0f, 1f, 0f);
-            Matrix.multiplyMM(mvpEscenario, 0, viewProjectionMatrix, 0, modelEscenario, 0);
+            Matrix.multiplyMM(mvpEscenario, 0, viewProjectionMatrixEscenario, 0, modelEscenario, 0);
 
             switch (escenarioActual) {
-                case 0:
-                    salaDeOro.draw(mvpEscenario);
-                    break;
-                // más escenarios si tienes
+                case 0: salaDeOro.draw(mvpEscenario); break;
+                case 1: arenaInfierno.draw(mvpEscenario); break;
+                case 2: arenaLegendaria.draw(mvpEscenario); break;
             }
 
             return;
         }
+
+        // TODO LO DE SELECCION DE PERSONAJES
+        float[] viewMatrix = new float[16];
+        Matrix.setLookAtM(viewMatrix, 0, 0, .2f, 7, 0, 0, 0, 0, 1, 0);
+
+        float[] viewProjectionMatrix = new float[16];
+        Matrix.multiplyMM(viewProjectionMatrix, 0, mProjectionMatrix, 0, viewMatrix, 0);
+
 
         // === HEROE (parte superior) ===
         GLES20.glViewport(0, screenHeight / 2, screenWidth, screenHeight / 2);
@@ -190,7 +267,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         switch (heroeActual) {
             case 0: chicoCubo.draw(mvpHeroe); break;
-            case 1: salaDeOro.draw(mvpHeroe); break;
+            case 1: chicaCubo.draw(mvpHeroe); break;
+            case 2: chicaRubia.draw(mvpHeroe); break;
+            case 3: mateo.draw(mvpHeroe); break;
+            case 4: chicoGamer.draw(mvpHeroe); break;
+
         }
 
         // === VILLANO (parte inferior) ===
@@ -217,7 +298,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             case 9: cleopatra.draw(mvpVillano); break;
         }
 
-*/
+
     }
 
     private boolean modoSeleccionEscenario = false;

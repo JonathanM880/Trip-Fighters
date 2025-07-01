@@ -50,6 +50,14 @@ public class MyGLSurfaceView extends GLSurfaceView {
         requestRender();
     }
 
+    public void setModoBatalla(boolean valor) {
+        renderer.setModoBatalla(valor);
+    }
+
+
+
+
+
 
 
 
